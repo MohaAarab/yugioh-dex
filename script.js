@@ -43,7 +43,7 @@ affich();
 
 function detail(creature) {
   const max = 5000;
-  const hpPerc = Math.min(100, (creature.stats.hp / max) * 100);
+  // const hpPerc = Math.min(100, (creature.stats.hp / max) * 100);
   const attPerc = (creature.stats.attack / max) * 100;
   const defPerc = (creature.stats.defence / max) * 100;
 
@@ -126,88 +126,93 @@ tpSelect.addEventListener("change", searchFilter);
 // champ, et n'ajoutez jamais une créature invalide.
 // -------------------------------------------------------------
 // error display function
-function error(id, msg) {
+function error(id, msg,inputId) {
   const errorEL = document.getElementById(id);
   errorEL.innerHTML = msg;
   errorEL.style.display = "block";
+  const input=document.querySelector(inputId)
+  input.classList.remove('border-brand-light')
+  input.classList.add("border-red-600");
+}
+// error remove function
+function errorRemovale(id,inputId){
+  const errorEL=document.querySelector(id)
+  errorEL.textContent=""
+  errorEL.style.display="none"
+  const input=document.querySelector(inputId)
+  input.classList.remove("border-red-600")
+  input.classList.add("border-brand-light")
 }
 
 // the validation fuction
 function valid(event) {
-  event.preventDefault();
+  // event.preventDefault();
 
   const id = document.querySelector("#id").value.trim();
   const name = document.querySelector("#name").value.trim();
-  // const type=document.querySelector('#type')
-  // const hp=document.querySelector('#hp')
   const attack = document.querySelector("#attack").value.trim();
   const defence = document.querySelector("#defence").value.trim();
-  // const img=document.querySelector('#img')
+
+  // error clearing
+  errorRemovale("#idError","#id")
+  errorRemovale("#nameError","#name")
+  errorRemovale("#attackError","#attack")
+  errorRemovale("#defenceError","#defence")
 
   const regex = /^#\d{3}$/;
   let isValid = true;
 
   // id validation
   if (id === "") {
-    error("idError", "id required");
-    document.querySelector('#id').classList.remove('border-brand-light')
-    document.querySelector('#id').classList.add("border-red-600");
-    isValid = false;
+    error("idError", "id required","#id");
+  isValid = false;
   } else if (!regex.test(id)) {
-    error("idError", "the id should be a # followed by 3 numbers");
-    document.querySelector('#id').classList.remove('border-brand-light')
-    document.querySelector('#id').classList.add("border-red-600");
-    isValid = false;
+    error("idError", "the id should be a # followed by 3 numbers","#id");
+  isValid = false;
   }
 
   // name validation
   if (name === "") {
-    error("nameError", "name is required");
-    document.querySelector('#name').classList.remove('border-brand-light')
-    document.querySelector('#name').classList.add("border-red-600");
-    isValid = false;
-
-  } else if (name.length <= 3) {
-    error("nameError", "name should be at least 3 letters");
-    document.querySelector('#name').classList.remove('border-brand-light')
-    document.querySelector('#name').classList.add("border-red-600");
-    isValid = false;
+    error("nameError", "name is required","#name");
+  isValid= false;
+  } else if (name.length <= 2) {
+    error("nameError", "name should be at least 3 letters","#name");
+  isValid = false;
   }
 
   // attack validation
   if (attack === "") {
-    error("attackError", "stats is required");
-    document.querySelector('#attack').classList.remove('border-brand-light')
-    document.querySelector('#attack').classList.add("border-red-600");
-    isValid = false;
-  } else if (attack.parseInt() > 5000) {
-    error("attackError", "the max stats is 5000");
-    document.querySelector('#attack').classList.remove('border-brand-light')
-    document.querySelector('#attack').classList.add("border-red-600");
-    isValid = false;
+    error("attackError", "stats is required","#attack");
+  isValid = false;
+  } else if (parseInt(attack) > 5000) {
+    error("attackError", "the max stats is 5000","#attack");
+  isValid = false;
   }
 
   // defence validation
   if (defence === "") {
-    error("defenceError", "stats is required");
-    document.querySelector('#defence').classList.remove('border-brand-light')
-    document.querySelector('#defence').classList.add("border-red-600");
-    isValid = false;
-  } else if (defence.parseInt() > 5000) {
-    error("defenceError", "the max stats is 5000");
-    document.querySelector('#defence').classList.remove('border-brand-light')
-    document.querySelector('#defence').classList.add("border-red-600");
-    isValid = false;
+    error("defenceError", "stats is required","#defence");
+  isValid = false;
+  } else if (parseInt(defence) > 5000) {
+    error("defenceError", "the max stats is 5000","#defence");
+  isValid = false;
   }
 
-  if (valid) {
-    alert("the form is submitted");
-  }
+  return isValid
 }
 
 function formValidation() {
   const form = document.querySelector("#creature-form");
-  form.addEventListener("submit", valid);
+  // use the input insted of submitte
+  // real time check
+  form.addEventListener("input", valid);
+
+  form.addEventListener("submit",function(event){
+    event.preventDefault()
+    if(valid()){
+      alert("the form is submetted")
+    }
+  })
 }
 formValidation();
 
