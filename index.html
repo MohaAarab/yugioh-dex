@@ -77,7 +77,7 @@
       <section id="grid" aria-label="Créatures" class="grid min-w-0 flex-1 grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
 
         <!-- Carte écrite à la main : à remplacer par des cartes générées en JS (Partie 2) -->
-      <template id="cards-template" >
+      <!-- <template id="cards-template" >
         <article data-id="11" class="flex flex-col gap-3 rounded-card bg-ground border-4 border-brand-light p-3 pb-4 transition duration-300 hover:-translate-y-2 shadow-[0_0_30px_rgba(250,204,21,0.6)] hover:shadow-[0_0_45px_rgba(250,204,21,0.9)]">
           <div class="card-img relative flex h-64 items-center justify-center rounded-xl bg-brand-light">
             <svg aria-hidden="true" class="h-14 w-14 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16c0-5 3.5-9 8-9s8 4 8 9"></path><circle cx="9" cy="12" r="1"></circle><circle cx="15" cy="12" r="1"></circle><path d="M7 7 5 3M17 7l2-4"></path></svg>
@@ -91,7 +91,7 @@
           <p class="cre-niv text-sm text-muted">Niveau</p>
           <button type="button" class="btn-outline bg-brand text-line border-solid border-brand-light mt-auto" style="box-shadow: 0 0 25px rgba(250, 204, 21, 0.6);">Ajouter à l'équipe</button>
         </article>
-      </template>
+      </template> -->
 
       </section>
 
@@ -180,29 +180,29 @@
           </select>
           <span class="error-message text-sm font-normal text-muted"></span>
         </label>
-        <label class="flex flex-col gap-1 text-sm font-bold">Niveau
+        <label  class="flex flex-col gap-1 text-sm font-bold">Niveau
           <input name="level" id="level" type="text" placeholder="Base, Niveau 1…" class="field font-normal border border-brand-light bg-ink">
-          <span class="error-message text-sm font-normal text-muted"></span>
+          <span id="levelError" class="error-message text-sm font-normal text-muted"></span>
         </label>
         <!-- <label class="flex flex-col gap-1 text-sm font-bold">HP
           <input name="stat1" id="hp" type="text" placeholder="0 à 999" class="field font-normal border border-brand-light bg-ink">
           <span class="error-message text-sm font-normal text-muted"></span>
         </label> -->
         <label class="flex flex-col gap-1 text-sm font-bold">Attaque
-          <input name="stat2" id="attack" type="text" placeholder="0 à 999" class="field font-normal border border-brand-light bg-ink">
+          <input name="stat2" id="attack" type="text" placeholder="0 à 5000" class="field font-normal border border-brand-light bg-ink">
           <span id="attackError" class="error-message text-sm font-normal text-muted"></span>
         </label>
         <label class="flex flex-col gap-1 text-sm font-bold">Defence
-          <input name="stat3" id="defence" type="text" placeholder="0 à 999" class="field font-normal border border-brand-light bg-ink">
+          <input name="stat3" id="defence" type="text" placeholder="0 à 5000" class="field font-normal border border-brand-light bg-ink">
           <span id="defenceError" class="error-message text-sm font-normal text-muted"></span>
         </label>
         <label class="flex flex-col gap-1 text-sm font-bold">Lien de l'image
           <input name="image" id="img" type="text" placeholder="https://…/image.png" class="field font-normal border border-brand-light bg-ink">
-          <span class="error-message text-sm font-normal text-muted"></span>
+          <span id="imgError" class="error-message text-sm font-normal text-muted"></span>
         </label>
-        <label class="flex flex-col gap-1 text-sm font-bold md:col-span-2 lg:col-span-4">Description
-          <textarea name="description" rows="3" placeholder="10 à 200 caractères" class="rounded-xl border border-brand-light bg-ink p-3 font-normal outline-none"></textarea>
-          <span class="error-message text-sm font-normal text-muted"></span>
+        <label  class="flex flex-col gap-1 text-sm font-bold md:col-span-2 lg:col-span-4">Description
+          <textarea id="description" name="description" rows="3" placeholder="10 à 200 caractères" class="rounded-xl border border-brand-light bg-ink p-3 font-normal outline-none"></textarea>
+          <span id="descriptionError" class="error-message text-sm font-normal text-muted"></span>
         </label>
         <div class="flex flex-wrap justify-end gap-3 md:col-span-2 lg:col-span-4">
           <button type="reset" class="btn-outline px-6 bg-ground text-cream border border-brand-light hover:text-ink hover:bg-brand">Effacer</button>
