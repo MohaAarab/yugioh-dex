@@ -12,6 +12,9 @@ storage.forEach(function (c) {
   creatures.push(c);
 });
 
+let team = [];
+const max = 6;
+
 // 1. AFFICHAGE
 
 function affich(list = creatures) {
@@ -34,13 +37,14 @@ function affich(list = creatures) {
       </div>
 
       <p class="cre-niv text-sm text-muted">${creature.level}</p>
-      <button type="button" data-id="${creature.id}" class="btn-add btn-outline bg-brand text-line border-solid border-brand-light mt-auto shadow-[0_0_25px_rgba(250,204,21,0.6)]">Ajouter à l'équipe</button>
+      <button type="button" data-id="${creature.id}" class="btn-add btn-primary btn-outline bg-brand text-line border-solid border-brand-light mt-auto shadow-[0_0_25px_rgba(250,204,21,0.6)]">Ajouter à l'équipe</button>
     </article>
   `,
     )
     .join("");
 
   document.querySelector("#creature-count").textContent = creatures.length;
+  updateButtons();
 }
 
 affich();
@@ -75,39 +79,52 @@ function detail(creature) {
             <div class="grid grid-cols-[80px_1fr_40px] items-center gap-2"><span class="font-bold">Attaque</span><span class="h-3 rounded-full bg-ground"><span class="block h-3 rounded-full bg-brand" style="width: ${attPerc}%"></span></span><span class="text-right font-mono">${creature.stats.attack}</span></div>
             <div class="grid grid-cols-[80px_1fr_40px] items-center gap-2"><span class="font-bold">Défense</span><span class="h-3 rounded-full bg-ground"><span class="block h-3 rounded-full bg-brand" style="width: ${defPerc}%"></span></span><span class="text-right font-mono">${creature.stats.defence}</span></div>
           </div>
-          <button type="button" class="btn-primary text-line border-2 border-brand-light"style="box-shadow: 0 0 30px rgba(250, 204, 21, 0.6);">Ajouter à l'équipe</button>
+          <button type="button" data-id="${creature.id}" class="btn-add btn-primary text-line border-2 border-brand-light"style="box-shadow: 0 0 30px rgba(250, 204, 21, 0.6);">Ajouter à l'équipe</button>
         </section>
 
 
     `;
+  updateButtons();
 }
 
 // event listners
 // event listner for the cards
 const grid = document.querySelector("#grid");
+grid.addEventListener("click", function (e) {
+  const target = e.target;
 
-grid.addEventListener("click", (e) => {
-  const card = e.target.closest("article");
-  if (!card) return;
+  // for ajouter a l'equipe
+  if (target.classList.contains("btn-add")) {
+    addToTeam(target.dataset.id);
+    return;
+  }
+  // for detail
+  let card = target;
+  while (card !== null && card.tagName !== "ARTICLE") {
+    card = card.parentNode;
+  }
+  if (card === null) return;
 
-  const id = card.dataset.id;
-  creatures.forEach((creature) => {
-    if (creature.id === id) {
-      detail(creature);
-    }
-  });
+  const creature = findCreature(card.dataset.id);
+  if (creature !== null) {
+    detail(creature);
+  }
 });
 
-// event listner fo the close button
 const detailPanel = document.querySelector("#detail");
 
-detailPanel.addEventListener("click", (e) => {
-  if (e.target.closest(".btn-close")) {
+detailPanel.addEventListener("click", function (e) {
+  const target = e.target;
+
+  if (target.classList.contains("btn-add")) {
+    addToTeam(target.dataset.id);
+  }
+  if (target.classList.contains("btn-close")) {
     detailPanel.classList.add("hidden");
   }
 });
 
-// 3. RECHERCHE AND FILTER
+//  RECHERCHE AND FILTER
 
 const rech = document.querySelector("#search");
 const tpSelect = document.querySelector("#typeFilter");
@@ -347,8 +364,8 @@ function formValidation() {
       };
       creatures.push(newCreature);
 
-      storage.push(newCreature)
-      localStorage.setItem("creature",JSON.stringify(storage))
+      storage.push(newCreature);
+      localStorage.setItem("creature", JSON.stringify(storage));
       affich();
       form.reset();
     }
@@ -362,6 +379,101 @@ formValidation();
 // écouteur sur la grille et UN SEUL sur l'équipe (délégation).
 // -------------------------------------------------------------
 
+function updateButtons() {
+  const buttons = document.querySelectorAll(".btn-add");
+
+  for (let i = 0; i < buttons.length; i++) {
+    if (team.length >= max) {
+      buttons[i].disabled = true;
+      buttons[i].classList.add("opacity-50");
+      buttons[i].classList.add("cursor-not-allowed");
+    } else {
+      buttons[i].disabled = false;
+      buttons[i].classList.remove("opacity-50");
+      buttons[i].classList.remove("cursor-not-allowed");
+    }
+  }
+}
+
+const teamSlots = document.querySelector("#team-slots");
+const teamMsg = document.querySelector("#team-msg");
+const team_count = document.querySelector("#team-count");
+const team_counter = document.querySelector("#team-counter");
+teamCreation();
+// finding creatures
+function findCreature(id) {
+  for (let i = 0; i < creatures.length; i++) {
+    if (creatures[i].id === id) {
+      return creatures[i];
+    }
+  }
+  return null;
+}
+
+// the add to the team function
+function addToTeam(id) {
+  for (let i = 0; i < team.length; i++) {
+    if (team[i] === id) {
+      teamMsg.textContent = "this creature is already in the team";
+      return;
+    }
+  }
+  if (team.length >= max) {
+    teamMsg.textContent = "the team is already full";
+    return
+  }
+  team.push(id);
+  teamCreation();
+}
+
+// remove from the team function
+function removeFromTeam(id) {
+  let newTeam = [];
+  for (let i = 0;i<team.length; i++) {
+    if (team[i] !== id) {
+      newTeam.push(team[i]);
+    }
+  }
+
+  team = newTeam;
+  teamCreation();
+}
+
+function teamCreation() {
+  let html = "";
+  for (let i = 0; i < max; i++) {
+    if (i < team.length) {
+      const creature = findCreature(team[i]);
+      html += `
+        <div class="border-2 border-brand-light p-2 flex flex-col gap-2 items-center">
+          <img src="${creature.image}" alt="${creature.name}" class="h-20 w-full object-cover rounded-lg">
+          <p class="text-sm font-bold">${creature.name}</p>
+          <button type="button" data-id="${creature.id}" class="btn-remove text-xs underline text-brand">Retirer</button>
+        </div>
+      `;
+    } else {
+      html += `<div class="border-dashed border-2 border-brand-light p-6 text-4xl text-brand">+</div>`;
+    }
+  }
+  teamSlots.innerHTML = html;
+  team_count.textContent = team.length;
+  team_counter.textContent = team.length + "/" + max;
+
+  if (team.length === 0) {
+    teamMsg.textContent = "no creature on the team";
+  } else {
+    teamMsg.textContent = "";
+  }
+
+  updateButtons();
+}
+
+function whatToRemove(e) {
+  if (e.target.classList.contains("btn-remove")) {
+    removeFromTeam(e.target.dataset.id);
+  }
+}
+teamSlots.addEventListener("click", whatToRemove);
 
 // -------------------------------------------------------------
 // 7. RÈGLES DE L'ÉQUIPE
