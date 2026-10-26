@@ -7,10 +7,10 @@ import { creatures } from "./data.js";
 // Une carte GitHub Projects et au moins un commit par fonctionnalité.
 
 // the localStorage section
-const storage=JSON.parse(localStorage.getItem("creature")) || []
-storage.forEach(function(c){
-  creatures.push(c)
-})
+const storage = JSON.parse(localStorage.getItem("creature")) || [];
+storage.forEach(function (c) {
+  creatures.push(c);
+});
 
 // 1. AFFICHAGE
 
@@ -167,10 +167,10 @@ function idValidation() {
     error("idError", "the id should be a # followed by 3 numbers", "#id");
     return false;
   }
-  for(let i=0;i<creatures.length;i++){
-    if(creatures[i].id === id){
-      error("idError", "this id already exist", "#id")
-      return false
+  for (let i = 0; i < creatures.length; i++) {
+    if (creatures[i].id === id) {
+      error("idError", "this id already exist", "#id");
+      return false;
     }
   }
 
@@ -211,7 +211,7 @@ function attackValidation() {
     error("attackError", "the max stats is 5000", "#attack");
     return false;
   }
-  if (Number(attack) < 0 ) {
+  if (Number(attack) < 0) {
     error("attackError", "the  stats should be positive ", "#attack");
     return false;
   }
@@ -236,7 +236,7 @@ function defenceValidation() {
     error("defenceError", "the max stats is 5000", "#defence");
     return false;
   }
-  if (Number(defence) < 0 ) {
+  if (Number(defence) < 0) {
     error("defenceError", "the stat should be positive ", "#defence");
     return false;
   }
@@ -248,7 +248,8 @@ function imgValidation() {
   const img = document.querySelector("#img").value.trim();
   errorRemovale("#imgError", "#img");
 
-  const regexImg =/^https?:\/\/.+\.(jpg|jpeg|png|gif|webp|avif|bmp|svg)(\?.*)?$/i;
+  const regexImg =
+    /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp|avif|bmp|svg)(\?.*)?$/i;
   if (img === "") {
     error("imgError", "image required", "#img");
     return false;
@@ -313,31 +314,43 @@ function formValidation() {
   form.addEventListener("submit", function (event) {
     event.preventDefault();
 
-      const idOk = idValidation() 
-      const nameOk = nameValidation() 
-      const attackOk = attackValidation() 
-      const defenceOk = defenceValidation() 
-      const imgOk = imgValidation() 
-      const levelOk = levelValidation() 
-      const descriptionOk = descriptionValidation() 
+    const idOk = idValidation();
+    const nameOk = nameValidation();
+    const attackOk = attackValidation();
+    const defenceOk = defenceValidation();
+    const imgOk = imgValidation();
+    const levelOk = levelValidation();
+    const descriptionOk = descriptionValidation();
 
-    if (idOk && nameOk && attackOk && defenceOk && imgOk && levelOk && descriptionOk ) {
+    if (
+      idOk &&
+      nameOk &&
+      attackOk &&
+      defenceOk &&
+      imgOk &&
+      levelOk &&
+      descriptionOk
+    ) {
       // alert("the form is submitted");
-      const newCreature={
-              id: document.querySelector("#id").value.trim(),
-      name: document.querySelector("#name").value.trim(),
-      type: document.querySelector("#type").value,
-      level: document.querySelector("#level").value.trim(),
-      image: document.querySelector("#img").value.trim(),
-      description: document.querySelector("#description").value.trim(),
-      icon: "",
-      stats: {
+      const newCreature = {
+        id: document.querySelector("#id").value.trim(),
+        name: document.querySelector("#name").value.trim(),
+        type: document.querySelector("#type").value,
+        level: "Niveau " + document.querySelector("#level").value.trim(),
+        image: document.querySelector("#img").value.trim(),
+        description: document.querySelector("#description").value.trim(),
+        icon: "",
+        stats: {
+          attack: Number(document.querySelector("#attack").value),
+          defence: Number(document.querySelector("#defence").value),
+        },
+      };
+      creatures.push(newCreature);
 
-        attack: Number(document.querySelector("#attack").value),
-        defence: Number(document.querySelector("#defence").value),
-      },
-      }
-      creatures.push(newCreature)
+      storage.push(newCreature)
+      localStorage.setItem("creature",JSON.stringify(storage))
+      affich();
+      form.reset();
     }
   });
 }
@@ -348,6 +361,7 @@ formValidation();
 // Boutons « Ajouter à l'équipe » et « Retirer », gérés avec UN SEUL
 // écouteur sur la grille et UN SEUL sur l'équipe (délégation).
 // -------------------------------------------------------------
+
 
 // -------------------------------------------------------------
 // 7. RÈGLES DE L'ÉQUIPE
