@@ -384,11 +384,11 @@ function updateButtons() {
     if (team.length >= max) {
       buttons[i].disabled = true;
       buttons[i].classList.add("cursor-not-allowed");
-      buttons[i].classList.add("text-gray-400" ,"border-gray-600");
+      buttons[i].classList.add("text-gray-400" ,"border-gray-600","opacity-50");
       buttons[i].classList.remove("shadow-[0_0_25px_rgba(250,204,21,0.6)]","text-line","border-brand-light")
     } else {
       buttons[i].disabled = false;
-      buttons[i].classList.remove("text-gray-400" ,"border-gray-600");
+      buttons[i].classList.remove("text-gray-400" ,"border-gray-600","opacity-50");
       buttons[i].classList.remove("cursor-not-allowed");
       buttons[i].classList.add("shadow-[0_0_25px_rgba(250,204,21,0.6)]","text-line","border-brand-light");
 
