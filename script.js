@@ -39,6 +39,7 @@ function affich(list = creatures) {
       <p class="cre-niv text-sm text-muted">${creature.level}</p>
       <button type="button" data-id="${creature.id}" class="btn-add btn-primary btn-outline bg-brand text-line border-solid border-brand-light mt-auto shadow-[0_0_25px_rgba(250,204,21,0.6)]">Ajouter à l'équipe</button>
     </article>
+    
   `,
     )
     .join("");
@@ -79,7 +80,7 @@ function detail(creature) {
             <div class="grid grid-cols-[80px_1fr_40px] items-center gap-2"><span class="font-bold">Attaque</span><span class="h-3 rounded-full bg-ground"><span class="block h-3 rounded-full bg-brand" style="width: ${attPerc}%"></span></span><span class="text-right font-mono">${creature.stats.attack}</span></div>
             <div class="grid grid-cols-[80px_1fr_40px] items-center gap-2"><span class="font-bold">Défense</span><span class="h-3 rounded-full bg-ground"><span class="block h-3 rounded-full bg-brand" style="width: ${defPerc}%"></span></span><span class="text-right font-mono">${creature.stats.defence}</span></div>
           </div>
-          <button type="button" data-id="${creature.id}" class="btn-add btn-primary text-line border-2 border-brand-light"style="box-shadow: 0 0 30px rgba(250, 204, 21, 0.6);">Ajouter à l'équipe</button>
+          <button type="button" data-id="${creature.id}" class="btn-add btn-primary text-line border-2 border-brand-light shadow-[0_0_25px_rgba(250,204,21,0.6)] ">Ajouter à l'équipe</button>
         </section>
 
 
@@ -379,18 +380,22 @@ formValidation();
 // écouteur sur la grille et UN SEUL sur l'équipe (délégation).
 // -------------------------------------------------------------
 
+// check if the buttons should be desabled or not
 function updateButtons() {
   const buttons = document.querySelectorAll(".btn-add");
 
   for (let i = 0; i < buttons.length; i++) {
     if (team.length >= max) {
       buttons[i].disabled = true;
-      buttons[i].classList.add("opacity-50");
       buttons[i].classList.add("cursor-not-allowed");
+      buttons[i].classList.add("text-gray-400" ,"border-gray-600");
+      buttons[i].classList.remove("shadow-[0_0_25px_rgba(250,204,21,0.6)]","text-line","border-brand-light")
     } else {
       buttons[i].disabled = false;
-      buttons[i].classList.remove("opacity-50");
+      buttons[i].classList.remove("text-gray-400" ,"border-gray-600");
       buttons[i].classList.remove("cursor-not-allowed");
+      buttons[i].classList.add("shadow-[0_0_25px_rgba(250,204,21,0.6)]","text-line","border-brand-light");
+
     }
   }
 }
