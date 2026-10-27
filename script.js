@@ -23,17 +23,13 @@ function affich(list = creatures) {
     .map(
       (creature) => `
     <article data-id="${creature.id}" class="cursor-pointer flex flex-col gap-3 rounded-card bg-ground border-4 border-brand-light p-3 pb-4 transition duration-300 hover:-translate-y-2 shadow-[0_0_30px_rgba(250,204,21,0.6)] hover:shadow-[0_0_45px_rgba(250,204,21,0.9)]">
-      <div class="card-img relative flex h-64 items-center justify-center rounded-xl gbg-brand-light">
-        <img class="h-full w-full rounded-xl object-cover" src="${creature.image}" alt="${creature.name}" loading="lazy">
+      <div class="card-img relative flex  items-center justify-center rounded-xl ">
+        <img class=" w-full rounded-xl object-contain aspect-[59/86]" src="${creature.image}" alt="${creature.name}" loading="lazy">
         <span class="absolute left-3 top-2 font-mono font-bold text-sm text-white">${creature.id}</span>
       </div>
 
-      <div class="flex items-center flex-col gap-2 text-brand-dark">
-        <div class="type-img flex h-10 w-10 items-center justify-center rounded-full border-2 border-brand-light shadow-[0_0_30px_rgba(250,204,21,0.6)] [&>svg]:h-6 [&>svg]:w-6" aria-hidden="true">
-          ${creature.icon}
-        </div>
         <h3 class="cre-name font-display text-sm font-bold">${creature.name}</h3>
-        <span class="cre-type rounded-full bg-brand-light px-4 py-2 text-sm font-bold text-ink">${creature.type}</span>
+        <span class="cre-type rounded-full bg-brand-light px-2 py-2 text-sm font-bold text-ink text-center">${creature.type}</span>
       </div>
 
       <p class="cre-niv text-sm text-muted">${creature.level}</p>
@@ -68,8 +64,8 @@ function detail(creature) {
             <span class="font-mono text-sm text-muted">${creature.id} · Détail</span>
             <button type="button" aria-label="Fermer le détail" class="btn-close btn-outline w-11 px-0">✕</button>
           </div>
-          <div class="flex h-64 items-center justify-center rounded-2xl bg-brand-light">
-            <img src="${creature.image}" alt="${creature.name}" class="h-full w-full rounded-2xl object-cover">
+          <div class="flex  items-center justify-center rounded-2xl">
+            <img src="${creature.image}" alt="${creature.name}" class="w-full max-w-xs rounded-2xl object-contain aspect-[59/86]">
           </div>
           <div class="flex flex-wrap justify-between">
             <h2 class="font-display text-3xl font-extrabold text-brand">${creature.name}</h2>
@@ -451,9 +447,9 @@ function teamCreation() {
       const creature = findCreature(team[i]);
       html += `
         <div class="border-2 border-brand-light p-2 flex flex-col gap-2 items-center">
-          <img src="${creature.image}" alt="${creature.name}" class="h-20 w-full object-cover rounded-lg">
+          <img src="${creature.image}" alt="${creature.name}" class="w-full  rounded-lg object-contain aspect-[59/86]">
           <p class="text-sm font-bold">${creature.name}</p>
-          <button type="button" data-id="${creature.id}" class="btn-remove text-xs underline text-brand">Retirer</button>
+          <button type="button" data-id="${creature.id}" class="btn-remove text-xs underline text-line bg-brand border-2 border-brand-light rounded-full p-3 font-bold">Retirer</button>
         </div>
       `;
     } else {
