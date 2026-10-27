@@ -4,8 +4,8 @@ Une encyclopédie interactive de cartes monstres **Yu-Gi-Oh!**, utilisable sur t
 
 Projet réalisé dans le cadre de la formation **YouCode** (Safi) · Sprint 2 · Brief 1.
 
-🔗 **Démo en ligne :** `https://VOTRE-NOM.github.io/NOM-DU-DEPOT/`
-📋 **Tableau GitHub Projects :** `LIEN-DU-TABLEAU`
+🔗 **Démo en ligne :** `https://mohaaarab.github.io/yugioh-dex/`
+📋 **Tableau GitHub Projects :** `https://trello.com/invite/b/6ae12a0cad4e26e58b5782e0/ATTIdb0acf342c524c5ba1c2548b6d79be8cC9B24EDE/mon-dex-sprint-2`
 
 ---
 
@@ -13,14 +13,6 @@ Projet réalisé dans le cadre de la formation **YouCode** (Safi) · Sprint 2 ·
 
 **Yu-Gi-Oh!** : des cartes monstres avec un attribut/type, un niveau (étoiles), une ATK et une DEF.
 
-## Aperçu
-
-> Ajoutez ici 2 captures d'écran : une version desktop et une version mobile.
->
-> `![Version desktop](design/screenshot-desktop.png)`
-> `![Version mobile](design/screenshot-mobile.png)`
-
----
 
 ## Technologies
 
@@ -62,27 +54,6 @@ Projet réalisé dans le cadre de la formation **YouCode** (Safi) · Sprint 2 ·
 
 ---
 
-## Installation
-
-Prérequis : [Node.js](https://nodejs.org/) installé.
-
-```bash
-# 1. Cloner le dépôt
-git clone https://github.com/VOTRE-NOM/NOM-DU-DEPOT.git
-cd NOM-DU-DEPOT
-
-# 2. Installer les dépendances
-npm install
-
-# 3. Compiler Tailwind (laisse tourner pour recompiler à chaque changement)
-npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
-```
-
-Ouvrez ensuite `index.html` avec l'extension **Live Server** de VS Code.
-
-> Si le projet contient un script dans `package.json` (par exemple `npm run dev`), utilisez-le à la place de la commande Tailwind ci-dessus.
-
----
 
 ## Structure du projet
 
@@ -179,14 +150,6 @@ tests.forEach(([champ, regex, valeur, attendu]) => {
 
 ---
 
-## Accessibilité
-
-- Champs de recherche et de filtre avec `<label class="sr-only">`.
-- Zones de la page identifiées avec `aria-label`.
-- Bouton de fermeture du détail avec `aria-label`.
-- Contraste fort : texte clair sur fond sombre.
-
----
 
 ## Auteur
 
